@@ -1,0 +1,380 @@
+[
+  {
+    "name": "Show 1",
+    "theme": "Alien Encounter",
+    "required_roles": [
+      "Magician",
+      "Dancer",
+      "Acrobat",
+      "Host"
+    ],
+    "recommended_tags": [
+      "Futuristic",
+      "Stylish"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 3500
+    }
+  },
+  {
+    "name": "Show 2",
+    "theme": "Underwater Illusion",
+    "required_roles": [
+      "Host",
+      "Acrobat",
+      "Magician"
+    ],
+    "recommended_tags": [
+      "Loud",
+      "Dramatic"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 3500
+    }
+  },
+  {
+    "name": "Show 3",
+    "theme": "Retro Rewind",
+    "required_roles": [
+      "Singer",
+      "Host",
+      "Dancer",
+      "Acrobat"
+    ],
+    "recommended_tags": [
+      "Loud",
+      "Stylish"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 3000
+    }
+  },
+  {
+    "name": "Show 4",
+    "theme": "Drama Duel",
+    "required_roles": [
+      "Dancer",
+      "Singer",
+      "Host",
+      "Magician"
+    ],
+    "recommended_tags": [
+      "Charming",
+      "Stylish"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 3000
+    }
+  },
+  {
+    "name": "Show 5",
+    "theme": "Retro Rewind",
+    "required_roles": [
+      "Host",
+      "Singer"
+    ],
+    "recommended_tags": [
+      "Charming",
+      "Showy"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 3000
+    }
+  },
+  {
+    "name": "Show 6",
+    "theme": "Stand-Up Comedy",
+    "required_roles": [
+      "Magician",
+      "Host",
+      "Singer"
+    ],
+    "recommended_tags": [
+      "Loud",
+      "Weird"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 3500
+    }
+  },
+  {
+    "name": "Show 7",
+    "theme": "Drama Duel",
+    "required_roles": [
+      "Dancer",
+      "Acrobat"
+    ],
+    "recommended_tags": [
+      "Classical",
+      "Charming"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 4500
+    }
+  },
+  {
+    "name": "Show 8",
+    "theme": "Futuristic Musical",
+    "required_roles": [
+      "Magician",
+      "Acrobat",
+      "Host"
+    ],
+    "recommended_tags": [
+      "Edgy",
+      "Weird"
+    ],
+    "restrictions": [
+      "No Acrobats"
+    ],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 5000
+    }
+  },
+  {
+    "name": "Show 9",
+    "theme": "Robot Revue",
+    "required_roles": [
+      "Host",
+      "Magician"
+    ],
+    "recommended_tags": [
+      "Classical",
+      "Edgy"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 5000
+    }
+  },
+  {
+    "name": "Show 10",
+    "theme": "Motor Circus",
+    "required_roles": [
+      "Singer",
+      "Magician",
+      "Tech"
+    ],
+    "recommended_tags": [
+      "Charming",
+      "Loud"
+    ],
+    "restrictions": [
+      "No Magicians"
+    ],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 3500
+    }
+  },
+  {
+    "name": "Show 11",
+    "theme": "Alien Encounter",
+    "required_roles": [
+      "Acrobat",
+      "Host",
+      "Singer",
+      "Magician"
+    ],
+    "recommended_tags": [
+      "Classical",
+      "Weird"
+    ],
+    "restrictions": [
+      "Require tag: Dramatic"
+    ],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 4000
+    }
+  },
+  {
+    "name": "Show 12",
+    "theme": "Techno Light Show",
+    "required_roles": [
+      "Magician",
+      "Tech",
+      "Dancer",
+      "Singer"
+    ],
+    "recommended_tags": [
+      "Energetic",
+      "Quiet"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 2500
+    }
+  },
+  {
+    "name": "Show 13",
+    "theme": "Fire Show",
+    "required_roles": [
+      "Dancer",
+      "Magician",
+      "Host",
+      "Tech"
+    ],
+    "recommended_tags": [
+      "Energetic",
+      "Loud"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 5000
+    }
+  },
+  {
+    "name": "Show 14",
+    "theme": "Puppet Theater",
+    "required_roles": [
+      "Acrobat",
+      "Host",
+      "Singer"
+    ],
+    "recommended_tags": [
+      "Quiet",
+      "Energetic"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 2500
+    }
+  },
+  {
+    "name": "Show 15",
+    "theme": "Fire Show",
+    "required_roles": [
+      "Singer",
+      "Acrobat",
+      "Host",
+      "Magician"
+    ],
+    "recommended_tags": [
+      "Energetic",
+      "Classical"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 3500
+    }
+  },
+  {
+    "name": "Show 16",
+    "theme": "Animal Talent",
+    "required_roles": [
+      "Magician",
+      "Singer",
+      "Dancer",
+      "Tech"
+    ],
+    "recommended_tags": [
+      "Charming",
+      "Weird"
+    ],
+    "restrictions": [
+      "No Dancers"
+    ],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 2500
+    }
+  },
+  {
+    "name": "Show 17",
+    "theme": "Animal Talent",
+    "required_roles": [
+      "Dancer",
+      "Tech",
+      "Magician",
+      "Acrobat"
+    ],
+    "recommended_tags": [
+      "Animal Lover",
+      "Quiet"
+    ],
+    "restrictions": [
+      "Require tag: Dramatic"
+    ],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 5000
+    }
+  },
+  {
+    "name": "Show 18",
+    "theme": "Lounge Jazz",
+    "required_roles": [
+      "Tech",
+      "Host",
+      "Singer"
+    ],
+    "recommended_tags": [
+      "Charming",
+      "Loud"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 3500
+    }
+  },
+  {
+    "name": "Show 19",
+    "theme": "Retro Rewind",
+    "required_roles": [
+      "Singer",
+      "Dancer",
+      "Acrobat",
+      "Host"
+    ],
+    "recommended_tags": [
+      "Classical",
+      "Charming"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 4,
+      "min_money": 2500
+    }
+  },
+  {
+    "name": "Show 20",
+    "theme": "Robot Revue",
+    "required_roles": [
+      "Dancer",
+      "Tech",
+      "Magician",
+      "Acrobat"
+    ],
+    "recommended_tags": [
+      "Stylish",
+      "Showy"
+    ],
+    "restrictions": [],
+    "goals": {
+      "min_star_rating": 3,
+      "min_money": 4500
+    }
+  }
+]

@@ -1,0 +1,818 @@
+[
+  {
+    "name": "Performer 1",
+    "role": "Singer",
+    "skill": 2,
+    "quirks": [
+      {
+        "requires_tag": "Dramatic"
+      }
+    ],
+    "tags": [
+      "Futuristic",
+      "Charming"
+    ],
+    "cost": 714
+  },
+  {
+    "name": "Performer 2",
+    "role": "Magician",
+    "skill": 2,
+    "quirks": [
+      {
+        "conflicts_with_role": "Tech"
+      },
+      {
+        "requires_role": "Acrobat"
+      }
+    ],
+    "tags": [
+      "Quiet",
+      "Dramatic"
+    ],
+    "cost": 677
+  },
+  {
+    "name": "Performer 3",
+    "role": "Dancer",
+    "skill": 3,
+    "quirks": [
+      {
+        "boosts_if_with_tag": "Weird"
+      }
+    ],
+    "tags": [
+      "Weird",
+      "Loud"
+    ],
+    "cost": 793
+  },
+  {
+    "name": "Performer 4",
+    "role": "Dancer",
+    "skill": 2,
+    "quirks": [
+      {
+        "requires_tag": "Loud"
+      },
+      {
+        "conflicts_with_role": "Magician"
+      }
+    ],
+    "tags": [
+      "Weird",
+      "Energetic"
+    ],
+    "cost": 664
+  },
+  {
+    "name": "Performer 5",
+    "role": "Acrobat",
+    "skill": 4,
+    "quirks": [
+      {
+        "requires_role": "Tech"
+      }
+    ],
+    "tags": [
+      "Loud",
+      "Classical"
+    ],
+    "cost": 988
+  },
+  {
+    "name": "Performer 6",
+    "role": "Host",
+    "skill": 5,
+    "quirks": [
+      {
+        "boosts_if_with_role": "Singer"
+      }
+    ],
+    "tags": [
+      "Showy",
+      "Weird"
+    ],
+    "cost": 981
+  },
+  {
+    "name": "Performer 7",
+    "role": "Magician",
+    "skill": 2,
+    "quirks": [
+      {
+        "requires_tag": "Showy"
+      }
+    ],
+    "tags": [
+      "Weird",
+      "Classical"
+    ],
+    "cost": 765
+  },
+  {
+    "name": "Performer 8",
+    "role": "Magician",
+    "skill": 4,
+    "quirks": [
+      {
+        "requires_tag": "Weird"
+      },
+      {
+        "requires_tag": "Showy"
+      }
+    ],
+    "tags": [
+      "Energetic",
+      "Stylish"
+    ],
+    "cost": 1000
+  },
+  {
+    "name": "Performer 9",
+    "role": "Singer",
+    "skill": 2,
+    "quirks": [
+      {
+        "conflicts_with_role": "Singer"
+      }
+    ],
+    "tags": [
+      "Charming",
+      "Energetic"
+    ],
+    "cost": 792
+  },
+  {
+    "name": "Performer 10",
+    "role": "Singer",
+    "skill": 4,
+    "quirks": [
+      {
+        "requires_role": "Magician"
+      },
+      {
+        "conflicts_with_tag": "Futuristic"
+      }
+    ],
+    "tags": [
+      "Weird",
+      "Classical"
+    ],
+    "cost": 934
+  },
+  {
+    "name": "Performer 11",
+    "role": "Host",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Dramatic"
+      }
+    ],
+    "tags": [
+      "Stylish",
+      "Futuristic"
+    ],
+    "cost": 894
+  },
+  {
+    "name": "Performer 12",
+    "role": "Acrobat",
+    "skill": 5,
+    "quirks": [
+      {
+        "boosts_if_with_tag": "Weird"
+      },
+      {
+        "boosts_if_with_role": "Singer"
+      }
+    ],
+    "tags": [
+      "Stylish",
+      "Showy"
+    ],
+    "cost": 1078
+  },
+  {
+    "name": "Performer 13",
+    "role": "Singer",
+    "skill": 2,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Animal Lover"
+      }
+    ],
+    "tags": [
+      "Charming",
+      "Energetic"
+    ],
+    "cost": 792
+  },
+  {
+    "name": "Performer 14",
+    "role": "Tech",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Showy"
+      }
+    ],
+    "tags": [
+      "Edgy",
+      "Futuristic"
+    ],
+    "cost": 851
+  },
+  {
+    "name": "Performer 15",
+    "role": "Dancer",
+    "skill": 3,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Futuristic"
+      },
+      {
+        "boosts_if_with_role": "Magician"
+      }
+    ],
+    "tags": [
+      "Animal Lover",
+      "Charming"
+    ],
+    "cost": 795
+  },
+  {
+    "name": "Performer 16",
+    "role": "Singer",
+    "skill": 4,
+    "quirks": [
+      {
+        "requires_role": "Host"
+      }
+    ],
+    "tags": [
+      "Weird",
+      "Edgy"
+    ],
+    "cost": 902
+  },
+  {
+    "name": "Performer 17",
+    "role": "Dancer",
+    "skill": 4,
+    "quirks": [
+      {
+        "boosts_if_with_role": "Magician"
+      },
+      {
+        "boosts_if_with_tag": "Charming"
+      }
+    ],
+    "tags": [
+      "Animal Lover",
+      "Quiet"
+    ],
+    "cost": 933
+  },
+  {
+    "name": "Performer 18",
+    "role": "Singer",
+    "skill": 5,
+    "quirks": [
+      {
+        "requires_role": "Tech"
+      }
+    ],
+    "tags": [
+      "Animal Lover",
+      "Dramatic"
+    ],
+    "cost": 1056
+  },
+  {
+    "name": "Performer 19",
+    "role": "Tech",
+    "skill": 5,
+    "quirks": [
+      {
+        "requires_role": "Magician"
+      },
+      {
+        "conflicts_with_role": "Dancer"
+      }
+    ],
+    "tags": [
+      "Showy",
+      "Energetic"
+    ],
+    "cost": 1042
+  },
+  {
+    "name": "Performer 20",
+    "role": "Tech",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_role": "Acrobat"
+      },
+      {
+        "requires_tag": "Classical"
+      }
+    ],
+    "tags": [
+      "Stylish",
+      "Loud"
+    ],
+    "cost": 887
+  },
+  {
+    "name": "Performer 21",
+    "role": "Magician",
+    "skill": 2,
+    "quirks": [
+      {
+        "conflicts_with_role": "Singer"
+      },
+      {
+        "boosts_if_with_role": "Acrobat"
+      }
+    ],
+    "tags": [
+      "Quiet",
+      "Futuristic"
+    ],
+    "cost": 661
+  },
+  {
+    "name": "Performer 22",
+    "role": "Dancer",
+    "skill": 2,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Quiet"
+      }
+    ],
+    "tags": [
+      "Edgy",
+      "Stylish"
+    ],
+    "cost": 776
+  },
+  {
+    "name": "Performer 23",
+    "role": "Singer",
+    "skill": 3,
+    "quirks": [
+      {
+        "boosts_if_with_tag": "Quiet"
+      },
+      {
+        "conflicts_with_role": "Tech"
+      }
+    ],
+    "tags": [
+      "Charming",
+      "Energetic"
+    ],
+    "cost": 858
+  },
+  {
+    "name": "Performer 24",
+    "role": "Singer",
+    "skill": 4,
+    "quirks": [
+      {
+        "boosts_if_with_role": "Magician"
+      }
+    ],
+    "tags": [
+      "Loud",
+      "Charming"
+    ],
+    "cost": 949
+  },
+  {
+    "name": "Performer 25",
+    "role": "Dancer",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_role": "Magician"
+      },
+      {
+        "conflicts_with_tag": "Charming"
+      }
+    ],
+    "tags": [
+      "Dramatic",
+      "Edgy"
+    ],
+    "cost": 898
+  },
+  {
+    "name": "Performer 26",
+    "role": "Singer",
+    "skill": 2,
+    "quirks": [
+      {
+        "boosts_if_with_tag": "Energetic"
+      },
+      {
+        "conflicts_with_tag": "Dramatic"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Showy"
+    ],
+    "cost": 719
+  },
+  {
+    "name": "Performer 27",
+    "role": "Dancer",
+    "skill": 4,
+    "quirks": [
+      {
+        "boosts_if_with_tag": "Quiet"
+      },
+      {
+        "conflicts_with_role": "Acrobat"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Animal Lover"
+    ],
+    "cost": 884
+  },
+  {
+    "name": "Performer 28",
+    "role": "Magician",
+    "skill": 5,
+    "quirks": [
+      {
+        "conflicts_with_role": "Acrobat"
+      },
+      {
+        "requires_role": "Acrobat"
+      }
+    ],
+    "tags": [
+      "Showy",
+      "Stylish"
+    ],
+    "cost": 1000
+  },
+  {
+    "name": "Performer 29",
+    "role": "Dancer",
+    "skill": 3,
+    "quirks": [
+      {
+        "conflicts_with_role": "Host"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Energetic"
+    ],
+    "cost": 896
+  },
+  {
+    "name": "Performer 30",
+    "role": "Magician",
+    "skill": 5,
+    "quirks": [
+      {
+        "requires_role": "Dancer"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Energetic"
+    ],
+    "cost": 1085
+  },
+  {
+    "name": "Performer 31",
+    "role": "Magician",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_role": "Singer"
+      },
+      {
+        "requires_role": "Dancer"
+      }
+    ],
+    "tags": [
+      "Dramatic",
+      "Edgy"
+    ],
+    "cost": 945
+  },
+  {
+    "name": "Performer 32",
+    "role": "Acrobat",
+    "skill": 4,
+    "quirks": [
+      {
+        "requires_role": "Tech"
+      },
+      {
+        "boosts_if_with_role": "Acrobat"
+      }
+    ],
+    "tags": [
+      "Dramatic",
+      "Classical"
+    ],
+    "cost": 939
+  },
+  {
+    "name": "Performer 33",
+    "role": "Singer",
+    "skill": 4,
+    "quirks": [
+      {
+        "boosts_if_with_tag": "Energetic"
+      }
+    ],
+    "tags": [
+      "Animal Lover",
+      "Edgy"
+    ],
+    "cost": 953
+  },
+  {
+    "name": "Performer 34",
+    "role": "Singer",
+    "skill": 3,
+    "quirks": [
+      {
+        "requires_tag": "Loud"
+      }
+    ],
+    "tags": [
+      "Showy",
+      "Quiet"
+    ],
+    "cost": 751
+  },
+  {
+    "name": "Performer 35",
+    "role": "Tech",
+    "skill": 4,
+    "quirks": [
+      {
+        "requires_tag": "Futuristic"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Weird"
+    ],
+    "cost": 870
+  },
+  {
+    "name": "Performer 36",
+    "role": "Host",
+    "skill": 4,
+    "quirks": [
+      {
+        "requires_tag": "Dramatic"
+      },
+      {
+        "requires_tag": "Loud"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Charming"
+    ],
+    "cost": 884
+  },
+  {
+    "name": "Performer 37",
+    "role": "Host",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Quiet"
+      },
+      {
+        "requires_tag": "Futuristic"
+      }
+    ],
+    "tags": [
+      "Weird",
+      "Quiet"
+    ],
+    "cost": 981
+  },
+  {
+    "name": "Performer 38",
+    "role": "Magician",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Energetic"
+      },
+      {
+        "conflicts_with_tag": "Charming"
+      }
+    ],
+    "tags": [
+      "Energetic",
+      "Quiet"
+    ],
+    "cost": 850
+  },
+  {
+    "name": "Performer 39",
+    "role": "Acrobat",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Stylish"
+      }
+    ],
+    "tags": [
+      "Energetic",
+      "Animal Lover"
+    ],
+    "cost": 860
+  },
+  {
+    "name": "Performer 40",
+    "role": "Singer",
+    "skill": 3,
+    "quirks": [
+      {
+        "requires_tag": "Futuristic"
+      }
+    ],
+    "tags": [
+      "Futuristic",
+      "Showy"
+    ],
+    "cost": 770
+  },
+  {
+    "name": "Performer 41",
+    "role": "Dancer",
+    "skill": 3,
+    "quirks": [
+      {
+        "requires_tag": "Dramatic"
+      }
+    ],
+    "tags": [
+      "Futuristic",
+      "Loud"
+    ],
+    "cost": 845
+  },
+  {
+    "name": "Performer 42",
+    "role": "Magician",
+    "skill": 4,
+    "quirks": [
+      {
+        "conflicts_with_role": "Tech"
+      },
+      {
+        "conflicts_with_tag": "Classical"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Stylish"
+    ],
+    "cost": 952
+  },
+  {
+    "name": "Performer 43",
+    "role": "Tech",
+    "skill": 2,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Stylish"
+      }
+    ],
+    "tags": [
+      "Edgy",
+      "Charming"
+    ],
+    "cost": 740
+  },
+  {
+    "name": "Performer 44",
+    "role": "Acrobat",
+    "skill": 2,
+    "quirks": [
+      {
+        "conflicts_with_tag": "Energetic"
+      },
+      {
+        "conflicts_with_role": "Dancer"
+      }
+    ],
+    "tags": [
+      "Futuristic",
+      "Weird"
+    ],
+    "cost": 791
+  },
+  {
+    "name": "Performer 45",
+    "role": "Dancer",
+    "skill": 3,
+    "quirks": [
+      {
+        "boosts_if_with_tag": "Charming"
+      }
+    ],
+    "tags": [
+      "Charming",
+      "Classical"
+    ],
+    "cost": 863
+  },
+  {
+    "name": "Performer 46",
+    "role": "Dancer",
+    "skill": 5,
+    "quirks": [
+      {
+        "conflicts_with_role": "Host"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Quiet"
+    ],
+    "cost": 958
+  },
+  {
+    "name": "Performer 47",
+    "role": "Magician",
+    "skill": 5,
+    "quirks": [
+      {
+        "boosts_if_with_tag": "Charming"
+      }
+    ],
+    "tags": [
+      "Classical",
+      "Futuristic"
+    ],
+    "cost": 1028
+  },
+  {
+    "name": "Performer 48",
+    "role": "Acrobat",
+    "skill": 2,
+    "quirks": [
+      {
+        "boosts_if_with_role": "Tech"
+      }
+    ],
+    "tags": [
+      "Futuristic",
+      "Showy"
+    ],
+    "cost": 775
+  },
+  {
+    "name": "Performer 49",
+    "role": "Tech",
+    "skill": 3,
+    "quirks": [
+      {
+        "requires_role": "Host"
+      }
+    ],
+    "tags": [
+      "Energetic",
+      "Classical"
+    ],
+    "cost": 785
+  },
+  {
+    "name": "Performer 50",
+    "role": "Magician",
+    "skill": 5,
+    "quirks": [
+      {
+        "requires_tag": "Energetic"
+      }
+    ],
+    "tags": [
+      "Dramatic",
+      "Classical"
+    ],
+    "cost": 1072
+  }
+]

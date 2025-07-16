@@ -1,0 +1,152 @@
+[
+  {
+    "boosts_if_with_tag": "Animal Lover"
+  },
+  {
+    "requires_role": "Acrobat"
+  },
+  {
+    "conflicts_with_tag": "Energetic"
+  },
+  {
+    "conflicts_with_tag": "Futuristic"
+  },
+  {
+    "conflicts_with_role": "Singer"
+  },
+  {
+    "requires_role": "Singer"
+  },
+  {
+    "boosts_if_with_role": "Singer"
+  },
+  {
+    "boosts_if_with_tag": "Classical"
+  },
+  {
+    "conflicts_with_tag": "Animal Lover"
+  },
+  {
+    "boosts_if_with_tag": "Energetic"
+  },
+  {
+    "boosts_if_with_tag": "Weird"
+  },
+  {
+    "conflicts_with_role": "Host"
+  },
+  {
+    "requires_role": "Magician"
+  },
+  {
+    "conflicts_with_tag": "Edgy"
+  },
+  {
+    "conflicts_with_tag": "Charming"
+  },
+  {
+    "requires_tag": "Dramatic"
+  },
+  {
+    "requires_tag": "Showy"
+  },
+  {
+    "requires_tag": "Weird"
+  },
+  {
+    "boosts_if_with_role": "Acrobat"
+  },
+  {
+    "conflicts_with_role": "Magician"
+  },
+  {
+    "conflicts_with_role": "Tech"
+  },
+  {
+    "conflicts_with_role": "Dancer"
+  },
+  {
+    "requires_tag": "Animal Lover"
+  },
+  {
+    "conflicts_with_role": "Acrobat"
+  },
+  {
+    "boosts_if_with_role": "Magician"
+  },
+  {
+    "boosts_if_with_tag": "Stylish"
+  },
+  {
+    "conflicts_with_tag": "Quiet"
+  },
+  {
+    "requires_tag": "Energetic"
+  },
+  {
+    "requires_tag": "Edgy"
+  },
+  {
+    "boosts_if_with_role": "Host"
+  },
+  {
+    "boosts_if_with_tag": "Showy"
+  },
+  {
+    "conflicts_with_tag": "Stylish"
+  },
+  {
+    "requires_tag": "Loud"
+  },
+  {
+    "boosts_if_with_tag": "Futuristic"
+  },
+  {
+    "boosts_if_with_tag": "Edgy"
+  },
+  {
+    "boosts_if_with_tag": "Charming"
+  },
+  {
+    "boosts_if_with_role": "Tech"
+  },
+  {
+    "requires_tag": "Futuristic"
+  },
+  {
+    "conflicts_with_tag": "Dramatic"
+  },
+  {
+    "requires_role": "Host"
+  },
+  {
+    "requires_role": "Dancer"
+  },
+  {
+    "conflicts_with_tag": "Classical"
+  },
+  {
+    "requires_tag": "Quiet"
+  },
+  {
+    "requires_tag": "Stylish"
+  },
+  {
+    "boosts_if_with_role": "Dancer"
+  },
+  {
+    "requires_role": "Tech"
+  },
+  {
+    "requires_tag": "Classical"
+  },
+  {
+    "conflicts_with_tag": "Weird"
+  },
+  {
+    "conflicts_with_tag": "Showy"
+  },
+  {
+    "boosts_if_with_tag": "Quiet"
+  }
+]
