@@ -74,7 +74,7 @@ public class LevelChoiceManager : MonoBehaviour
     {
         if (IsLevelExist(idx))
             return gameManager.levels[idx].levelName;
-        return "Немає рівня";
+        return "There is no level";
     }
 
     bool IsLevelExist(int idx)

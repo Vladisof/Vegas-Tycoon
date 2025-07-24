@@ -13,7 +13,7 @@ public class ShopDonatController : MonoBehaviour
     
   
 
-    public string donat = "road.jumper.coinspack";
+    public string donat = "com.pertycoon.inappcoinspackone";
 
 
 

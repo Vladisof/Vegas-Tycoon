@@ -91,7 +91,7 @@ private void CreateLevelHistoryItem(int levelIndex)
         var messageItem = Instantiate(levelHistoryUIPrefab, levelHistoryParent);
         
         var nameText = messageItem.transform.Find("LevelNameText").GetComponent<TextMeshProUGUI>();
-        nameText.text = "Жодного рівня ще не пройдено";
+        nameText.text = "No level completed";
         
         var starsText = messageItem.transform.Find("StarsText").GetComponent<TextMeshProUGUI>();
         starsText.text = "";
@@ -99,7 +99,7 @@ private void CreateLevelHistoryItem(int levelIndex)
         var requirementsText = messageItem.transform.Find("RequirementsText")?.GetComponent<TextMeshProUGUI>();
         if (requirementsText != null)
         {
-            requirementsText.text = "Пройдіть рівні щоб побачити історію";
+            requirementsText.text = "Complete the levels to see the story";
         }
     }
 
