@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using System.Collections; // Add this for IEnumerator
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public MoneyController moneyController;
     public LevelChoiceManager levelChoiceManager;
     public AudioManager audioManager;
+    public ExpeditionManager expeditionManager;
 
     [Header("Levels")]
     public List<LevelData> levels = new List<LevelData>();
@@ -46,6 +48,16 @@ public class GameManager : MonoBehaviour
     public GameObject selectLevelPanel;
     public GameObject MenuPanel;
     public GameObject introPanel;
+    public GameObject SceneGameObject; // об'єкт сцени, де відбувається гра
+    
+    [Header("Expedition System")]
+    public GameObject characterSelectionObject; // об'єкт з вибором персонажів
+    public Button expeditionModeButton; // кнопка переключення в режим експедиций
+    public Button characterSelectionModeButton; // кнопка возврата к выбору персонажей
+    
+    [Header("Star Animation Objects")]
+    public GameObject starAnimationObject1;
+    public GameObject starAnimationObject2;
     
 
     void Awake()
@@ -63,12 +75,60 @@ public class GameManager : MonoBehaviour
             Debug.LogError("No levels defined!");
             return;
         }
+        
         if (completedLevels.Count == 0)
         {
             currentLevelIndex = 0;
         }
         currentLevelText.text = GetCurrentLevelText();
+        
+        // Setup expedition mode buttons
+        SetupExpeditionButtons();
     }
+    
+    void SetupExpeditionButtons()
+    {
+        if (expeditionModeButton != null)
+        {
+            expeditionModeButton.onClick.AddListener(SwitchToExpeditionMode);
+        }
+        
+        if (characterSelectionModeButton != null)
+        {
+            characterSelectionModeButton.onClick.AddListener(SwitchToCharacterSelectionMode);
+        }
+    }
+    
+    public void SwitchToExpeditionMode()
+    {
+        // Hide character selection
+        if (characterSelectionObject != null)
+        {
+            characterSelectionObject.SetActive(false);
+        }
+        
+        // Show expedition panel
+        if (expeditionManager != null)
+        {
+            expeditionManager.ShowExpeditionPanel();
+        }
+    }
+    
+    public void SwitchToCharacterSelectionMode()
+    {
+        // Hide expedition panel
+        if (expeditionManager != null)
+        {
+            expeditionManager.HideExpeditionPanel();
+        }
+        
+        // Show character selection
+        if (characterSelectionObject != null)
+        {
+            characterSelectionObject.SetActive(true);
+        }
+    }
+    
     private void SetCurrentLevelBasedOnProgress()
     {
         if (completedLevels.Count == 0)
@@ -273,12 +333,20 @@ public void LoadAndDisplayCurrentLevelIntro()
         summaryTextField.gameObject.SetActive(false);
         summaryPL.gameObject.SetActive(false);
 
-        // Show stars earned for 2 seconds
+        // Start star animation sequence - set both objects to Start=true, Finish=false
+        SetAnimatorBooleans(true, false);
+        
+        // Wait 1 second for animation
+        yield return new WaitForSeconds(1f);
+
+        // Show stars earned
         if (result.stars == 3) stars3TextPrefab.gameObject.SetActive(true);
         else if (result.stars == 2) stars2TextPrefab.gameObject.SetActive(true);
         else if (result.stars == 1) stars1TextPrefab.gameObject.SetActive(true);
         else stars0TextPrefab.gameObject.SetActive(true);
+        
         yield return new WaitForSeconds(4f);
+        SetAnimatorBooleans(false, true);
         if (result.stars == 3) stars3TextPrefab.gameObject.SetActive(false);
         else if (result.stars == 2) stars2TextPrefab.gameObject.SetActive(false);
         else if (result.stars == 1) stars1TextPrefab.gameObject.SetActive(false);
@@ -295,7 +363,31 @@ public void LoadAndDisplayCurrentLevelIntro()
         audioManager.PlaySound(1);
     
         simulationPanel.SetActive(false);
-        selectLevelPanel.SetActive(true);
+        performersSelectionPanel.gameObject.SetActive(true);
+        SceneGameObject.SetActive(false);
+    }
+
+    private void SetAnimatorBooleans(bool startValue, bool finishValue)
+    {
+        if (starAnimationObject1 != null)
+        {
+            Animator animator1 = starAnimationObject1.GetComponent<Animator>();
+            if (animator1 != null)
+            {
+                animator1.SetBool("Start", startValue);
+                animator1.SetBool("Finish", finishValue);
+            }
+        }
+
+        if (starAnimationObject2 != null)
+        {
+            Animator animator2 = starAnimationObject2.GetComponent<Animator>();
+            if (animator2 != null)
+            {
+                animator2.SetBool("Start", startValue);
+                animator2.SetBool("Finish", finishValue);
+            }
+        }
     }
 
     // --- Основна логіка симуляції шоу і оцінки ---
@@ -352,8 +444,16 @@ public void LoadAndDisplayCurrentLevelIntro()
     int score = totalSkill + synergy - conflict + recTagsBonus + random;
     int money = (100 + (score * 50) + (synergy * 50) - (conflict * 200));
     int stars = (score >= 15) ? 3 : (score >= 11) ? 2 : (score >= 6) ? 1 : 0;
-    if (money<= stars)
-        money = stars * 100; // Ensure minimum money based on stars
+    
+    // Якщо 0 звезд - даем 0 денег, иначе применяем минимум на основе звезд
+    if (stars == 0)
+    {
+        money = 0;
+    }
+    else if (money <= stars)
+    {
+        money = stars * 100; // Ensure minimum money based on stars (only for 1+ stars)
+    }
 
     bool success = stars >= level.requiredStars && money >= level.requiredMoney;
 
