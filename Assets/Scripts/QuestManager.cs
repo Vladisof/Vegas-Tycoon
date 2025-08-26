@@ -8,19 +8,19 @@ using UnityEngine.UI;
 public class QuestData
 {
     public string name;
-    public int duration; // в секундах
+    public int duration; // in seconds
     public int goldReward;
     public bool isActive;
     public float startTime;
-    public bool isCompleted; // завершен ли квест
-    public bool rewardCollected; // собрана ли награда
+    public bool isCompleted; // whether the quest is completed
+    public bool rewardCollected; // whether the reward is collected
 }
 
 public class QuestManager : MonoBehaviour
 {
     [Header("Quest UI References")]
-    public Transform questButtonParent; // родительский объект для кнопок квестов
-    public GameObject questButtonPrefab; // префаб кнопки квеста
+    public Transform questButtonParent; // parent object for quest buttons
+    public GameObject questButtonPrefab; // quest button prefab
     
     [Header("Active Quest UI")]
     public GameObject activeQuestUI;
@@ -29,48 +29,46 @@ public class QuestManager : MonoBehaviour
     public Button collectQuestRewardButton;
     
     [Header("Quest Refresh Timer UI")]
-    public TextMeshProUGUI questRefreshTimerText; // таймер до смены квестов
+    public TextMeshProUGUI questRefreshTimerText; // timer until quest refresh
     
     private List<QuestData> currentQuests = new List<QuestData>();
     private QuestData currentActiveQuest;
     private MoneyController moneyController;
     
-    // Названия квестов для случайной генерации
+    // Quest names for random generation
     private string[] questNames = {
-        "Поиск сокровищ",
-        "Разведка местности", 
-        "Сбор артефактов",
-        "Охота на монстров",
-        "Исследование руин",
-        "Торговая миссия",
-        "Спасательная операция",
-        "Патрулирование границ",
-        "Добыча ресурсов",
-        "Дипломатическое задание",
-        "Охрана каравана",
-        "Поиск пропавших",
-        "Зачистка территории",
-        "Доставка посылки",
-        "Исследование пещер"
+        "Treasure Hunt",
+        "Territory Reconnaissance", 
+        "Artifact Collection",
+        "Monster Hunt",
+        "Ruins Exploration",
+        "Trade Mission",
+        "Rescue Operation",
+        "Border Patrol",
+        "Resource Gathering",
+        "Diplomatic Mission",
+        "Caravan Guard",
+        "Search for Missing",
+        "Area Clearing",
+        "Package Delivery",
+        "Cave Exploration"
     };
     
     void Start()
     {
         moneyController = FindObjectOfType<MoneyController>();
         
-        // Загружаем квесты или генерируем новые
+        // Load quests or generate new ones
         LoadOrGenerateQuests();
         
-        // Настраиваем UI
+        // Setup UI
         SetupUI();
         
-        // Проверяем активные квесты при загрузке
+        // Check active quests on load
         CheckActiveQuest();
         
-        // Запускаем таймер обновления UI
+        // Start UI update timer
         StartCoroutine(UpdateQuestRefreshTimer());
-        
-        Debug.Log("QuestManager запущен. Квестов сгенерировано: " + currentQuests.Count);
     }
     
     void SetupUI()
@@ -86,12 +84,12 @@ public class QuestManager : MonoBehaviour
     
     void LoadOrGenerateQuests()
     {
-        // Проверяем, нужно ли генерировать новые квесты
+        // Check if we need to generate new quests
         string lastQuestGenerationTime = PlayerPrefs.GetString("LastQuestGenerationTime", "");
         
         if (string.IsNullOrEmpty(lastQuestGenerationTime))
         {
-            // Первый запуск - генерируем квесты
+            // First launch - generate quests
             GenerateNewQuests();
         }
         else
@@ -104,19 +102,18 @@ public class QuestManager : MonoBehaviour
                 
                 if (timeSinceLastGeneration.TotalHours >= 24)
                 {
-                    // Прошло 24 часа - сбрасываем все и генерируем новые квесты
+                    // 24 hours have passed - reset everything and generate new quests
                     ClearAllQuestProgress();
                     GenerateNewQuests();
                 }
                 else
                 {
-                    // Загружаем существующие квесты
+                    // Load existing quests
                     LoadExistingQuests();
                 }
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Ошибка при загрузке времени генерации квестов: {e.Message}");
                 GenerateNewQuests();
             }
         }
@@ -126,23 +123,23 @@ public class QuestManager : MonoBehaviour
     {
         currentQuests.Clear();
         
-        // Генерируем 3 случайных квеста
+        // Generate 3 random quests
         for (int i = 0; i < 3; i++)
         {
             QuestData newQuest = new QuestData();
             
-            // Случайное название
+            // Random name
             newQuest.name = questNames[Random.Range(0, questNames.Length)];
             
-            // Случайная продолжительность: 5 минут, 30 минут, 1 час или 3 часа
-            float[] durations = { 300f, 1800f, 3600f, 10800f }; // в секундах
-            int[] rewards = { 150, 500, 1200, 4000 }; // соответствующие награды
+            // Random duration: 5 minutes, 30 minutes, 1 hour or 3 hours
+            float[] durations = { 300f, 1800f, 3600f, 10800f }; // in seconds
+            int[] rewards = { 150, 500, 1200, 4000 }; // corresponding rewards
             
             int durationIndex = Random.Range(0, durations.Length);
             newQuest.duration = (int)durations[durationIndex];
             newQuest.goldReward = rewards[durationIndex];
             
-            // Добавляем небольшую случайность к награде (±20%)
+            // Add small randomness to reward (±20%)
             float rewardMultiplier = Random.Range(0.8f, 1.2f);
             newQuest.goldReward = Mathf.RoundToInt(newQuest.goldReward * rewardMultiplier);
             
@@ -153,21 +150,17 @@ public class QuestManager : MonoBehaviour
             currentQuests.Add(newQuest);
         }
         
-        // Сохраняем время генерации
+        // Save generation time
         SaveQuestGenerationTime();
         SaveQuests();
-        
-        Debug.Log("Сгенерированы новые квесты");
     }
     
     void LoadExistingQuests()
     {
         currentQuests.Clear();
         
-        // Загружаем количество квестов
+        // Load quest count
         int questCount = PlayerPrefs.GetInt("QuestCount", 0);
-        
-        Debug.Log($"LoadExistingQuests: загружается {questCount} квестов");
         
         for (int i = 0; i < questCount; i++)
         {
@@ -179,13 +172,10 @@ public class QuestManager : MonoBehaviour
             quest.isCompleted = PlayerPrefs.GetInt($"Quest{i}_IsCompleted", 0) == 1;
             quest.rewardCollected = PlayerPrefs.GetInt($"Quest{i}_RewardCollected", 0) == 1;
             
-            Debug.Log($"Квест {i}: {quest.name}, isActive: {quest.isActive}, isCompleted: {quest.isCompleted}, rewardCollected: {quest.rewardCollected}");
-            
             if (quest.isActive && !quest.rewardCollected)
             {
-                // Загружаем время начала активного квеста
+                // Load start time of active quest
                 string startTimeString = PlayerPrefs.GetString($"Quest{i}_StartTime", "");
-                Debug.Log($"Время начала квеста {quest.name}: {startTimeString}");
                 
                 if (!string.IsNullOrEmpty(startTimeString))
                 {
@@ -196,36 +186,28 @@ public class QuestManager : MonoBehaviour
                         System.TimeSpan timeElapsed = System.DateTime.Now - startTime;
                         double elapsedSeconds = timeElapsed.TotalSeconds;
                         
-                        Debug.Log($"Загружается квест: {quest.name}. Прошло времени: {elapsedSeconds:F1} сек из {quest.duration}");
-                        
                         if (elapsedSeconds >= quest.duration)
                         {
-                            // Квест уже завершен - устанавливаем правильное время и отмечаем как завершенный
-                            quest.startTime = Time.time - quest.duration - 1; // -1 чтобы точно было завершено
+                            // Quest is already completed - set correct time and mark as completed
+                            quest.startTime = Time.time - quest.duration - 1; // -1 to ensure completion
                             quest.isCompleted = true;
                             currentActiveQuest = quest;
-                            Debug.Log($"Квест {quest.name} завершен пока игрок был оффлайн!");
                         }
                         else
                         {
-                            // Квест все еще идет - правильно вычисляем startTime для оставшегося времени
+                            // Quest is still ongoing - correctly calculate startTime for remaining time
                             quest.startTime = Time.time - (float)elapsedSeconds;
                             currentActiveQuest = quest;
-                            // НЕ запускаем таймер здесь - он будет запущен в CheckActiveQuest()
-                            Debug.Log($"Квест {quest.name} продолжается. Осталось: {quest.duration - elapsedSeconds:F1} сек");
                         }
                     }
                     catch (System.Exception e)
                     {
-                        Debug.LogError($"Ошибка при загрузке времени квеста: {e.Message}");
                         quest.isActive = false;
                         quest.isCompleted = false;
                     }
                 }
                 else
                 {
-                    // Нет времени начала - сбрасываем квест
-                    Debug.LogWarning($"У квеста {quest.name} нет времени начала - сбрасываем");
                     quest.isActive = false;
                     quest.isCompleted = false;
                 }
@@ -234,9 +216,7 @@ public class QuestManager : MonoBehaviour
             currentQuests.Add(quest);
         }
         
-        Debug.Log($"Загружены существующие квесты: {questCount}, currentActiveQuest: {(currentActiveQuest != null ? currentActiveQuest.name : "нет")}");
-        
-        // Важно: сохраняем обновленное состояние квестов
+        // Important: save updated quest state
         if (currentActiveQuest != null)
         {
             SaveQuests();
@@ -245,13 +225,13 @@ public class QuestManager : MonoBehaviour
     
     void UpdateQuestButtons()
     {
-        // Удаляем старые кнопки
+        // Remove old buttons
         foreach (Transform child in questButtonParent)
         {
             Destroy(child.gameObject);
         }
         
-        // Создаем кнопки для квестов
+        // Create buttons for quests
         for (int i = 0; i < currentQuests.Count; i++)
         {
             CreateQuestButton(currentQuests[i], i);
@@ -263,7 +243,7 @@ public class QuestManager : MonoBehaviour
         GameObject buttonObj = Instantiate(questButtonPrefab, questButtonParent);
         Button button = buttonObj.GetComponent<Button>();
         
-        // Находим текстовые компоненты кнопки
+        // Find text components of the button
         TextMeshProUGUI[] texts = buttonObj.GetComponentsInChildren<TextMeshProUGUI>();
         if (texts.Length > 0)
         {
@@ -271,23 +251,23 @@ public class QuestManager : MonoBehaviour
         }
         if (texts.Length > 1)
         {
-            texts[1].text = $"Награда: {quest.goldReward} золота";
+            texts[1].text = $"Reward: {quest.goldReward} gold";
         }
         if (texts.Length > 2)
         {
             int minutes = quest.duration / 60;
             if (minutes < 60)
             {
-                texts[2].text = $"Время: {minutes} мин";
+                texts[2].text = $"Time: {minutes} min";
             }
             else
             {
                 int hours = minutes / 60;
-                texts[2].text = $"Время: {hours} ч";
+                texts[2].text = $"Time: {hours} h";
             }
         }
         
-        // Определяем состояние кнопки
+        // Determine button state
         bool canStart = currentActiveQuest == null && !quest.isActive && !quest.rewardCollected;
         button.interactable = canStart;
         
@@ -295,21 +275,21 @@ public class QuestManager : MonoBehaviour
         {
             if (texts.Length > 0)
             {
-                texts[0].text += " (В процессе)";
+                texts[0].text += " (In Progress)";
             }
         }
         else if (quest.rewardCollected)
         {
             if (texts.Length > 0)
             {
-                texts[0].text += " (Выполнен)";
+                texts[0].text += " (Completed)";
             }
         }
         else if (currentActiveQuest != null)
         {
             if (texts.Length > 0)
             {
-                texts[0].text += " (Недоступно)";
+                texts[0].text += " (Unavailable)";
             }
         }
         
@@ -320,29 +300,25 @@ public class QuestManager : MonoBehaviour
     {
         if (currentActiveQuest != null || quest.isActive || quest.rewardCollected)
         {
-            Debug.Log("Нельзя начать квест - уже есть активный или квест выполнен");
             return;
         }
         
         quest.isActive = true;
         quest.startTime = Time.time;
         currentActiveQuest = quest;
+
         
-        Debug.Log($"Начинаем квест: {quest.name}, устанавливаем isActive = true");
-        
-        // Сохраняем прогресс СРАЗУ после изменения состояния
+        // Save progress IMMEDIATELY after state change
         SaveActiveQuestProgress(quest);
-        SaveQuests(); // Важно: сохраняем общее состояние квестов
+        SaveQuests(); // Important: save general quest state
+
         
-        Debug.Log($"Квест сохранен. Проверяем: isActive = {PlayerPrefs.GetInt($"Quest{currentQuests.IndexOf(quest)}_IsActive", -1)}");
-        
-        // Запускаем таймер
+        // Start timer
         StartCoroutine(QuestTimer(quest));
         
         UpdateQuestButtons();
         UpdateActiveQuestUI();
-        
-        Debug.Log($"Начат квест: {quest.name}");
+
     }
     
     IEnumerator QuestTimer(QuestData quest)
@@ -379,11 +355,11 @@ public class QuestManager : MonoBehaviour
             
             if (hours > 0)
             {
-                activeQuestTimerText.text = $"Осталось: {hours:00}:{minutes:00}:{seconds:00}";
+                activeQuestTimerText.text = $"Remaining: {hours:00}:{minutes:00}:{seconds:00}";
             }
             else
             {
-                activeQuestTimerText.text = $"Осталось: {minutes:00}:{seconds:00}";
+                activeQuestTimerText.text = $"Remaining: {minutes:00}:{seconds:00}";
             }
         }
     }
@@ -392,7 +368,7 @@ public class QuestManager : MonoBehaviour
     {
         quest.isCompleted = true;
         
-        // Показываем кнопку сбора награды
+        // Show reward collection button
         if (collectQuestRewardButton != null)
         {
             collectQuestRewardButton.gameObject.SetActive(true);
@@ -401,25 +377,24 @@ public class QuestManager : MonoBehaviour
         
         UpdateActiveQuestUI();
         SaveQuests();
-        
-        Debug.Log($"Квест {quest.name} завершен! Награда: {quest.goldReward} золота");
+
     }
     
     public void CollectQuestReward()
     {
         if (currentActiveQuest == null || !currentActiveQuest.isCompleted) return;
         
-        // Добавляем золото
+        // Add gold
         if (moneyController != null)
         {
             moneyController.AddMoney(currentActiveQuest.goldReward);
         }
         
-        // Отмечаем награду как собранную
+        // Mark reward as collected
         currentActiveQuest.rewardCollected = true;
         currentActiveQuest.isActive = false;
         
-        // Скрываем UI активного квеста
+        // Hide active quest UI
         if (activeQuestUI != null)
         {
             activeQuestUI.SetActive(false);
@@ -434,8 +409,7 @@ public class QuestManager : MonoBehaviour
         
         UpdateQuestButtons();
         SaveQuests();
-        
-        Debug.Log("Награда за квест собрана!");
+
     }
     
     void UpdateActiveQuestUI()
@@ -449,7 +423,7 @@ public class QuestManager : MonoBehaviour
             
             if (activeQuestNameText != null)
             {
-                activeQuestNameText.text = $"Активен: {currentActiveQuest.name}";
+                activeQuestNameText.text = $"Active: {currentActiveQuest.name}";
             }
             
             if (currentActiveQuest.isCompleted)
@@ -462,7 +436,7 @@ public class QuestManager : MonoBehaviour
                 
                 if (activeQuestTimerText != null)
                 {
-                    activeQuestTimerText.text = "Завершено! Соберите награду";
+                    activeQuestTimerText.text = "Completed! Collect your reward";
                 }
             }
             else
@@ -490,12 +464,9 @@ public class QuestManager : MonoBehaviour
     
     void CheckActiveQuest()
     {
-        Debug.Log("CheckActiveQuest вызван");
-        
-        // Если активный квест уже установлен в LoadExistingQuests, не переустанавливаем его
+        // If active quest is already set in LoadExistingQuests, do not reset it
         if (currentActiveQuest != null)
         {
-            Debug.Log($"Активный квест уже найден: {currentActiveQuest.name}");
             
             if (!currentActiveQuest.isCompleted)
             {
@@ -506,21 +477,20 @@ public class QuestManager : MonoBehaviour
                 }
                 else
                 {
-                    // Запускаем таймер для продолжающегося квеста
+                    // Start timer for ongoing quest
                     StartCoroutine(QuestTimer(currentActiveQuest));
-                    Debug.Log($"Запущен таймер для продолжающегося квеста: {currentActiveQuest.name}");
                 }
             }
         }
         else
         {
-            // Ищем активный квест если он не был установлен
+            // Find active quest if it was not set
             foreach (QuestData quest in currentQuests)
             {
                 if (quest.isActive && !quest.rewardCollected)
                 {
                     currentActiveQuest = quest;
-                    Debug.Log($"Найден активный квест: {quest.name}");
+                    Debug.Log($"Active quest found: {quest.name}");
                     
                     if (!quest.isCompleted)
                     {
@@ -540,7 +510,6 @@ public class QuestManager : MonoBehaviour
         }
         
         UpdateActiveQuestUI();
-        Debug.Log($"После CheckActiveQuest, currentActiveQuest: {(currentActiveQuest != null ? currentActiveQuest.name : "нет")}");
     }
     
     IEnumerator UpdateQuestRefreshTimer()
@@ -559,7 +528,7 @@ public class QuestManager : MonoBehaviour
         string lastGenerationTimeString = PlayerPrefs.GetString("LastQuestGenerationTime", "");
         if (string.IsNullOrEmpty(lastGenerationTimeString))
         {
-            questRefreshTimerText.text = "Новые квесты: скоро";
+            questRefreshTimerText.text = "New quests: soon";
             return;
         }
         
@@ -572,11 +541,11 @@ public class QuestManager : MonoBehaviour
             
             if (timeUntilRefresh.TotalSeconds <= 0)
             {
-                // Время вышло - обновляем квесты
+                // Time's up - refresh quests
                 ClearAllQuestProgress();
                 GenerateNewQuests();
                 UpdateQuestButtons();
-                questRefreshTimerText.text = "Квесты обновлены!";
+                questRefreshTimerText.text = "Quests refreshed!";
             }
             else
             {
@@ -584,18 +553,18 @@ public class QuestManager : MonoBehaviour
                 int minutes = timeUntilRefresh.Minutes;
                 int seconds = timeUntilRefresh.Seconds;
                 
-                questRefreshTimerText.text = $"Новые квесты через: {hours:00}:{minutes:00}:{seconds:00}";
+                questRefreshTimerText.text = $"New quests in: {hours:00}:{minutes:00}:{seconds:00}";
             }
         }
         catch
         {
-            questRefreshTimerText.text = "Новые квесты: скоро";
+            questRefreshTimerText.text = "New quests: soon";
         }
     }
     
     void Update()
     {
-        // Обновляем таймер активного квеста
+        // Update active quest timer
         if (currentActiveQuest != null && currentActiveQuest.isActive && !currentActiveQuest.isCompleted)
         {
             float timeElapsed = Time.time - currentActiveQuest.startTime;
@@ -612,7 +581,7 @@ public class QuestManager : MonoBehaviour
         }
     }
     
-    // Методы сохранения и загрузки
+    // Save and load methods
     void SaveQuestGenerationTime()
     {
         string timeString = System.DateTime.Now.ToBinary().ToString();
@@ -624,7 +593,7 @@ public class QuestManager : MonoBehaviour
     {
         string startTimeString = System.DateTime.Now.ToBinary().ToString();
         
-        // Найдем индекс квеста
+        // Find quest index
         int questIndex = currentQuests.IndexOf(quest);
         if (questIndex >= 0)
         {
@@ -651,13 +620,13 @@ public class QuestManager : MonoBehaviour
         PlayerPrefs.Save();
     }
     
-    void ClearAllQuestProgress()
+    public void ClearAllQuestProgress()
     {
-        // Очищаем текущие квесты
+        // Clear current quests
         currentActiveQuest = null;
         currentQuests.Clear();
         
-        // Очищаем все сохраненные данные квестов
+        // Clear all saved quest data
         int questCount = PlayerPrefs.GetInt("QuestCount", 0);
         for (int i = 0; i < questCount; i++)
         {
@@ -672,7 +641,5 @@ public class QuestManager : MonoBehaviour
         
         PlayerPrefs.DeleteKey("QuestCount");
         PlayerPrefs.Save();
-        
-        Debug.Log("Все данные квестов очищены");
     }
 }

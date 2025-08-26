@@ -59,6 +59,9 @@ public class GameManager : MonoBehaviour
     public GameObject starAnimationObject1;
     public GameObject starAnimationObject2;
     
+    [Header("Debug")]
+    public Button resetAllDataButton; // Кнопка для сброса всех данных
+    
 
     void Awake()
     {
@@ -84,6 +87,12 @@ public class GameManager : MonoBehaviour
         
         // Setup expedition mode buttons
         SetupExpeditionButtons();
+        
+        // Setup debug button
+        if (resetAllDataButton != null)
+        {
+            resetAllDataButton.onClick.AddListener(ResetAllData);
+        }
     }
     
     void SetupExpeditionButtons()
@@ -290,8 +299,6 @@ public void LoadAndDisplayCurrentLevelIntro()
 
         if (result.success)
         {
-            Debug.Log("Level complete! Stars: " + result.stars + ", Money: " + result.moneyEarned);
-
             // Save level result with stars
             SaveLevelResult(currentLevelIndex, result.stars);
 
@@ -303,7 +310,6 @@ public void LoadAndDisplayCurrentLevelIntro()
         }
         else
         {
-            Debug.Log("Level failed. Try different performers or upgrades.");
         }
 
         performersSelectionManager.ClearSelection();
@@ -591,6 +597,109 @@ public void LoadAndDisplayCurrentLevelIntro()
         }
         currentLevelIndex = PlayerPrefs.GetInt("CurrentLevelIndex", 0);
     }
+    
+    // МЕТОД ДЛЯ ПОЛНОГО СБРОСА ВСЕХ ДАННЫХ В ИГРЕ
+    public void ResetAllData()
+    {
+        // 1. Очищаем локальные данные GameManager
+        completedLevels.Clear();
+        levelStars.Clear();
+        chosenPerformers.Clear();
+        currentLevelIndex = 0;
+        
+        // 2. Сбрасываем все PlayerPrefs данные
+        
+        // Сброс уровней и прогресса
+        PlayerPrefs.DeleteKey("CompletedLevels");
+        PlayerPrefs.DeleteKey("CurrentLevelIndex");
+        
+        // Сброс звезд за уровни (удаляем все возможные ключи)
+        for (int i = 0; i < 50; i++) // предполагаем максимум 50 уровней
+        {
+            PlayerPrefs.DeleteKey($"LevelStars_{i}");
+        }
+        
+        // 3. Сброс денег (MoneyController)
+        PlayerPrefs.DeleteKey("PlayerMoney");
+        PlayerPrefs.DeleteKey("Money");
+        PlayerPrefs.DeleteKey("TotalMoney");
+        
+        // 4. Сброс данных артистов (PerformersManager)
+        PlayerPrefs.DeleteKey("PerformersData");
+        PlayerPrefs.DeleteKey("PerformerCount");
+        for (int i = 0; i < 100; i++) // предполагаем максимум 100 артистов
+        {
+            PlayerPrefs.DeleteKey($"Performer_{i}_Name");
+            PlayerPrefs.DeleteKey($"Performer_{i}_Role");
+            PlayerPrefs.DeleteKey($"Performer_{i}_Level");
+            PlayerPrefs.DeleteKey($"Performer_{i}_Experience");
+            PlayerPrefs.DeleteKey($"Performer_{i}_Skill");
+        }
+        
+        // 5. Сброс экспедиций (ExpeditionManager)
+        PlayerPrefs.DeleteKey("ActiveExpeditionName");
+        PlayerPrefs.DeleteKey("ExpeditionStartTime");
+        PlayerPrefs.DeleteKey("ExpeditionDuration");
+        
+        // 6. Сброс квестов (QuestManager)
+        PlayerPrefs.DeleteKey("LastQuestGenerationTime");
+        int questCount = PlayerPrefs.GetInt("QuestCount", 0);
+        for (int i = 0; i < questCount; i++)
+        {
+            PlayerPrefs.DeleteKey($"Quest{i}_Name");
+            PlayerPrefs.DeleteKey($"Quest{i}_Duration");
+            PlayerPrefs.DeleteKey($"Quest{i}_Reward");
+            PlayerPrefs.DeleteKey($"Quest{i}_IsActive");
+            PlayerPrefs.DeleteKey($"Quest{i}_IsCompleted");
+            PlayerPrefs.DeleteKey($"Quest{i}_RewardCollected");
+            PlayerPrefs.DeleteKey($"Quest{i}_StartTime");
+        }
+        PlayerPrefs.DeleteKey("QuestCount");
+        
+        // 7. Сброс истории уровней (LevelHistoryManager)
+        PlayerPrefs.DeleteKey("LevelHistory");
+        
+        // 8. Сброс любых других возможных ключей
+        PlayerPrefs.DeleteKey("FirstLaunch");
+        PlayerPrefs.DeleteKey("GameVersion");
+        PlayerPrefs.DeleteKey("Settings");
+        
+        // Применяем все изменения
+        PlayerPrefs.Save();
+        
+        // 9. Сбрасываем компоненты напрямую если они существуют
+        
+        // Сброс MoneyController
+        if (moneyController != null)
+        {
+            moneyController.ResetMoney(); // Если есть такой метод
+        }
+        
+        // Сброс PerformersManager
+        if (performersManager != null)
+        {
+            // Можно добавить метод Reset в PerformersManager
+        }
+        
+        // Сброс ExpeditionManager
+        if (expeditionManager != null)
+        {
+            // Можно добавить метод Reset в ExpeditionManager
+        }
+        
+        // Находим и сбрасываем QuestManager
+        QuestManager questManager = FindObjectOfType<QuestManager>();
+        if (questManager != null)
+        {
+            questManager.ClearAllQuestProgress();
+        }
+        
+        // 10. Перезагружаем текущую сцену
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
+        );
+    }
+    
     public List<LevelData> GetPredefinedLevels()
 {
     return new List<LevelData>

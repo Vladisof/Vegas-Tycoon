@@ -9,21 +9,21 @@ public class ExpeditionData
 {
     public string name;
     public int requiredLevelsCompleted;
-    public int duration; // в секундах
+    public int duration; // in seconds
     public int goldReward;
     public bool isActive;
     public float startTime;
-    public GameObject expeditionLocationObject; // объект на сцене для этой экспедиции
+    public GameObject expeditionLocationObject; // scene object for this expedition
 }
 
 public class ExpeditionManager : MonoBehaviour
 {
     [Header("UI References")]
     public GameObject expeditionPanel;
-    public GameObject expeditionSelectionPanel; // панель со списком экспедиций
-    public Transform expeditionButtonParent; // родительский объект для кнопок экспедиций
-    public GameObject expeditionButtonPrefab; // префаб кнопки экспедиции
-    public GameObject lockedExpeditionPrefab; // префаб заблокированной экспедиции
+    public GameObject expeditionSelectionPanel; // panel with expedition list
+    public Transform expeditionButtonParent; // parent object for expedition buttons
+    public GameObject expeditionButtonPrefab; // expedition button prefab
+    public GameObject lockedExpeditionPrefab; // locked expedition prefab
     public Button backToCharacterSelectionButton;
     
     [Header("Expedition Data")]
@@ -44,58 +44,56 @@ public class ExpeditionManager : MonoBehaviour
         gameManager = GameManager.Instance;
         moneyController = FindObjectOfType<MoneyController>();
         
-        // Инициализируем экспедиции
+        // Initialize expeditions
         InitializeExpeditions();
         
-        // Загружаем сохраненные экспедиции ТОЛЬКО если есть сохранения
+        // Load saved expeditions ONLY if there are saves
         LoadExpeditionProgress();
         
-        // Настраиваем UI
+        // Setup UI
         SetupUI();
         
-        // Проверяем активные экспедиции при загрузке ТОЛЬКО если что-то загружено
+        // Check active expeditions on load ONLY if something is loaded
         CheckActiveExpeditions();
-        
-        Debug.Log("ExpeditionManager запущен. Активных экспедиций: " + (currentActiveExpedition != null ? currentActiveExpedition.name : "нет"));
     }
     
     void InitializeExpeditions()
     {
-        // Очищаем список если он не пустой
+        // Clear list if not empty
         if (expeditions.Count == 0)
         {
             expeditions.Add(new ExpeditionData 
             { 
-                name = "Малая экспедиция", 
+                name = "Small Expedition", 
                 requiredLevelsCompleted = 0, 
-                duration = 120, // 2 минуты
+                duration = 120, // 2 minutes
                 goldReward = 100,
                 isActive = false
             });
             
             expeditions.Add(new ExpeditionData 
             { 
-                name = "Средняя экспедиция", 
+                name = "Medium Expedition", 
                 requiredLevelsCompleted = 2, 
-                duration = 180, // 3 минуты
+                duration = 180, // 3 minutes
                 goldReward = 200,
                 isActive = false
             });
             
             expeditions.Add(new ExpeditionData 
             { 
-                name = "Большая экспедиция", 
+                name = "Large Expedition", 
                 requiredLevelsCompleted = 4, 
-                duration = 300, // 5 минут
+                duration = 300, // 5 minutes
                 goldReward = 350,
                 isActive = false
             });
             
             expeditions.Add(new ExpeditionData 
             { 
-                name = "Легендарная экспедиция", 
+                name = "Legendary Expedition", 
                 requiredLevelsCompleted = 6, 
-                duration = 600, // 10 минут
+                duration = 600, // 10 minutes
                 goldReward = 500,
                 isActive = false
             });
@@ -112,7 +110,7 @@ public class ExpeditionManager : MonoBehaviour
         if (collectRewardButton != null)
         {
             collectRewardButton.onClick.AddListener(CollectReward);
-            // Изначально показываем кнопку, но делаем неинтерактивной
+            // Initially show button but make it non-interactive
             collectRewardButton.gameObject.SetActive(true);
             collectRewardButton.interactable = false;
         }
@@ -135,7 +133,7 @@ public class ExpeditionManager : MonoBehaviour
     void BackToCharacterSelection()
     {
         HideExpeditionPanel();
-        // Возвращаемся к выбору персонажей через GameManager
+        // Return to character selection through GameManager
         if (gameManager != null)
         {
             gameManager.OpenSelectionPanel();
@@ -144,7 +142,7 @@ public class ExpeditionManager : MonoBehaviour
     
     void UpdateExpeditionButtons()
     {
-        // Удаляем старые кнопки
+        // Remove old buttons
         foreach (Transform child in expeditionButtonParent)
         {
             Destroy(child.gameObject);
@@ -152,7 +150,7 @@ public class ExpeditionManager : MonoBehaviour
         
         int completedLevels = gameManager.GetCompletedLevels().Count;
         
-        // Создаем кнопки для доступных экспедиций
+        // Create buttons for available expeditions
         foreach (ExpeditionData expedition in expeditions)
         {
             if (completedLevels >= expedition.requiredLevelsCompleted)
@@ -171,7 +169,7 @@ public class ExpeditionManager : MonoBehaviour
         GameObject buttonObj = Instantiate(expeditionButtonPrefab, expeditionButtonParent);
         Button button = buttonObj.GetComponent<Button>();
         
-        // Находим текстовые компоненты кнопки
+        // Find text components of the button
         TextMeshProUGUI[] texts = buttonObj.GetComponentsInChildren<TextMeshProUGUI>();
         if (texts.Length > 0)
         {
@@ -179,14 +177,14 @@ public class ExpeditionManager : MonoBehaviour
         }
         if (texts.Length > 1)
         {
-            texts[1].text = $"Награда: {expedition.goldReward} золота";
+            texts[1].text = $"Reward: {expedition.goldReward} gold";
         }
         if (texts.Length > 2)
         {
-            texts[2].text = $"Время: {expedition.duration / 60} мин";
+            texts[2].text = $"Time: {expedition.duration / 60} min";
         }
         
-        // Проверяем, можно ли начать экспедицию
+        // Check if expedition can be started
         bool canStart = !IsAnyExpeditionActive() && !expedition.isActive;
         button.interactable = canStart;
         
@@ -194,14 +192,14 @@ public class ExpeditionManager : MonoBehaviour
         {
             if (texts.Length > 0)
             {
-                texts[0].text += " (В процессе)";
+                texts[0].text += " (In Progress)";
             }
         }
         else if (IsAnyExpeditionActive())
         {
             if (texts.Length > 0)
             {
-                texts[0].text += " (Недоступно)";
+                texts[0].text += " (Unavailable)";
             }
         }
         
@@ -213,7 +211,7 @@ public class ExpeditionManager : MonoBehaviour
         GameObject buttonObj = Instantiate(lockedExpeditionPrefab, expeditionButtonParent);
         Button button = buttonObj.GetComponent<Button>();
         
-        // Находим текстовые компоненты кнопки
+        // Find text components of the button
         TextMeshProUGUI[] texts = buttonObj.GetComponentsInChildren<TextMeshProUGUI>();
         if (texts.Length > 0)
         {
@@ -221,7 +219,7 @@ public class ExpeditionManager : MonoBehaviour
         }
         if (texts.Length > 1)
         {
-            texts[1].text = $"Требуется уровней: {expedition.requiredLevelsCompleted}";
+            texts[1].text = $"Required levels: {expedition.requiredLevelsCompleted}";
         }
         
         button.interactable = false;
@@ -231,7 +229,6 @@ public class ExpeditionManager : MonoBehaviour
     {
         if (IsAnyExpeditionActive() || expedition.isActive)
         {
-            Debug.Log("Нельзя начать экспедицию - уже есть активная");
             return;
         }
         
@@ -239,16 +236,16 @@ public class ExpeditionManager : MonoBehaviour
         expedition.startTime = Time.time;
         currentActiveExpedition = expedition;
         
-        // Сохраняем время начала экспедиции в реальном времени
+        // Save expedition start time in real time
         SaveExpeditionProgress(expedition);
         
-        // Активируем объект локации экспедиции
+        // Activate expedition location object
         if (expedition.expeditionLocationObject != null)
         {
             expedition.expeditionLocationObject.SetActive(true);
         }
         
-        // Оставляем кнопку видимой, но делаем неинтерактивной
+        // Keep button visible but make it non-interactive
         if (collectRewardButton != null)
         {
             collectRewardButton.gameObject.SetActive(true);
@@ -259,17 +256,15 @@ public class ExpeditionManager : MonoBehaviour
         
         UpdateExpeditionButtons();
         UpdateActiveExpeditionUI();
-        
-        Debug.Log($"Начата экспедиция: {expedition.name}");
     }
     
     IEnumerator ExpeditionTimer(ExpeditionData expedition)
     {
-        // Вычисляем оставшееся время
+        // Calculate remaining time
         float timeElapsed = Time.time - expedition.startTime;
         float timer = expedition.duration - timeElapsed;
         
-        // Если времени уже не осталось, сразу завершаем
+        // If no time left, complete immediately
         if (timer <= 0)
         {
             CompleteExpedition(expedition);
@@ -280,7 +275,7 @@ public class ExpeditionManager : MonoBehaviour
         {
             timer -= Time.deltaTime;
             
-            // Обновляем UI таймера
+            // Update timer UI
             UpdateTimerUI(timer);
             
             yield return null;
@@ -288,7 +283,7 @@ public class ExpeditionManager : MonoBehaviour
         
         if (expedition.isActive)
         {
-            // Экспедиция завершена
+            // Expedition completed
             CompleteExpedition(expedition);
         }
     }
@@ -299,15 +294,13 @@ public class ExpeditionManager : MonoBehaviour
         {
             int minutes = Mathf.FloorToInt(timeLeft / 60);
             int seconds = Mathf.FloorToInt(timeLeft % 60);
-            activeExpeditionTimerText.text = $"Осталось: {minutes:00}:{seconds:00}";
+            activeExpeditionTimerText.text = $"Remaining: {minutes:00}:{seconds:00}";
         }
     }
     
     void CompleteExpedition(ExpeditionData expedition)
     {
-        Debug.Log($"Экспедиция {expedition.name} завершена! Награда: {expedition.goldReward} золота");
-        
-        // Показываем кнопку сбора награды и делаем её интерактивной
+        // Show reward collection button and make it interactive
         if (collectRewardButton != null)
         {
             collectRewardButton.gameObject.SetActive(true);
@@ -321,26 +314,26 @@ public class ExpeditionManager : MonoBehaviour
     {
         if (currentActiveExpedition == null) return;
         
-        // Добавляем золото
+        // Add gold
         if (moneyController != null)
         {
             moneyController.AddMoney(currentActiveExpedition.goldReward);
         }
         
-        // Деактивируем объект локации
+        // Deactivate location object
         if (currentActiveExpedition.expeditionLocationObject != null)
         {
             currentActiveExpedition.expeditionLocationObject.SetActive(false);
         }
         
-        // Сбрасываем экспедицию
+        // Reset expedition
         currentActiveExpedition.isActive = false;
         currentActiveExpedition = null;
         
-        // Очищаем сохраненные данные экспедиции
+        // Clear saved expedition data
         ClearExpeditionProgress();
         
-        // Скрываем UI активной экспедиции
+        // Hide active expedition UI
         if (activeExpeditionUI != null)
         {
             activeExpeditionUI.SetActive(false);
@@ -352,8 +345,6 @@ public class ExpeditionManager : MonoBehaviour
         }
         
         UpdateExpeditionButtons();
-        
-        Debug.Log("Награда собрана!");
     }
     
     void UpdateActiveExpeditionUI()
@@ -367,14 +358,14 @@ public class ExpeditionManager : MonoBehaviour
             
             if (activeExpeditionNameText != null)
             {
-                activeExpeditionNameText.text = $"Активна: {currentActiveExpedition.name}";
+                activeExpeditionNameText.text = $"Active: {currentActiveExpedition.name}";
             }
             
-            // Проверяем, завершена ли экспедиция
+            // Check if expedition is completed
             float timeElapsed = Time.time - currentActiveExpedition.startTime;
             if (timeElapsed >= currentActiveExpedition.duration)
             {
-                // Экспедиция завершена - показываем кнопку и делаем интерактивной
+                // Expedition completed - show button and make it interactive
                 if (collectRewardButton != null)
                 {
                     collectRewardButton.gameObject.SetActive(true);
@@ -383,12 +374,12 @@ public class ExpeditionManager : MonoBehaviour
                 
                 if (activeExpeditionTimerText != null)
                 {
-                    activeExpeditionTimerText.text = "Завершено! Соберите награду";
+                    activeExpeditionTimerText.text = "Completed! Collect your reward";
                 }
             }
             else
             {
-                // Экспедиция еще идет - показываем кнопку но делаем неинтерактивной
+                // Expedition still ongoing - show button but make it non-interactive
                 if (collectRewardButton != null)
                 {
                     collectRewardButton.gameObject.SetActive(true);
@@ -403,7 +394,7 @@ public class ExpeditionManager : MonoBehaviour
                 activeExpeditionUI.SetActive(false);
             }
             
-            // Когда нет активной экспедиции - СКРЫВАЕМ кнопку полностью
+            // When no active expedition - HIDE button completely
             if (collectRewardButton != null)
             {
                 collectRewardButton.gameObject.SetActive(false);
@@ -417,7 +408,7 @@ public class ExpeditionManager : MonoBehaviour
         {
             if (expedition.isActive)
             {
-                // Проверяем, не истекло ли время
+                // Check if time hasn't expired
                 float timeElapsed = Time.time - expedition.startTime;
                 if (timeElapsed < expedition.duration)
                 {
@@ -430,24 +421,16 @@ public class ExpeditionManager : MonoBehaviour
     
     void CheckActiveExpeditions()
     {
-        Debug.Log("CheckActiveExpeditions вызван");
-        
         foreach (ExpeditionData expedition in expeditions)
         {
-            Debug.Log($"Проверяем экспедицию: {expedition.name}, isActive: {expedition.isActive}");
-            
             if (expedition.isActive)
             {
-                Debug.Log($"Найдена активная экспедиция: {expedition.name}");
-                
                 float timeElapsed = Time.time - expedition.startTime;
                 if (timeElapsed < expedition.duration)
                 {
                     currentActiveExpedition = expedition;
-                    // НЕ запускаем новый таймер - он уже правильно настроен в LoadExpeditionProgress
-                    // StartCoroutine(ExpeditionTimer(expedition)); // УБИРАЕМ ЭТУ СТРОКУ
                     
-                    // Активируем объект локации
+                    // Activate location object
                     if (expedition.expeditionLocationObject != null)
                     {
                         expedition.expeditionLocationObject.SetActive(true);
@@ -455,20 +438,19 @@ public class ExpeditionManager : MonoBehaviour
                 }
                 else
                 {
-                    // Экспедиция уже должна была завершиться
+                    // Expedition should have completed already
                     CompleteExpedition(expedition);
                 }
                 break;
             }
         }
         
-        Debug.Log($"После CheckActiveExpeditions, currentActiveExpedition: {(currentActiveExpedition != null ? currentActiveExpedition.name : "нет")}");
         UpdateActiveExpeditionUI();
     }
     
     void Update()
     {
-        // Постоянно обновляем UI активной экспедиции
+        // Constantly update active expedition UI
         if (currentActiveExpedition != null && currentActiveExpedition.isActive)
         {
             float timeElapsed = Time.time - currentActiveExpedition.startTime;
@@ -480,43 +462,38 @@ public class ExpeditionManager : MonoBehaviour
             }
             else
             {
-                // Время истекло - завершаем экспедицию
+                // Time expired - complete expedition
                 CompleteExpedition(currentActiveExpedition);
             }
         }
     }
     
-    // Методы для сохранения и загрузки прогресса экспедиций
+    // Methods for saving and loading expedition progress
     void SaveExpeditionProgress(ExpeditionData expedition)
     {
-        // Сохраняем название активной экспедиции
+        // Save active expedition name
         PlayerPrefs.SetString("ActiveExpeditionName", expedition.name);
         
-        // Сохраняем реальное время начала экспедиции
+        // Save real start time of expedition
         string startTimeString = System.DateTime.Now.ToBinary().ToString();
         PlayerPrefs.SetString("ExpeditionStartTime", startTimeString);
         
-        // Сохраняем длительность экспедиции
+        // Save expedition duration
         PlayerPrefs.SetInt("ExpeditionDuration", expedition.duration);
         
         PlayerPrefs.Save();
-        
-        Debug.Log($"Сохранена экспедиция: {expedition.name} в {System.DateTime.Now}");
     }
     
     void LoadExpeditionProgress()
     {
         string savedExpeditionName = PlayerPrefs.GetString("ActiveExpeditionName", "");
         
-        Debug.Log($"LoadExpeditionProgress: savedExpeditionName = '{savedExpeditionName}'");
-        
         if (string.IsNullOrEmpty(savedExpeditionName))
         {
-            Debug.Log("Нет сохраненной экспедиции - пропускаем загрузку");
-            return; // Нет сохраненной экспедиции
+            return; // No saved expedition
         }
         
-        // Получаем сохраненное время начала
+        // Get saved start time
         string startTimeString = PlayerPrefs.GetString("ExpeditionStartTime", "");
         if (string.IsNullOrEmpty(startTimeString))
         {
@@ -525,67 +502,59 @@ public class ExpeditionManager : MonoBehaviour
         
         try
         {
-            // Конвертируем время обратно
+            // Convert time back
             long startTimeBinary = System.Convert.ToInt64(startTimeString);
             System.DateTime startTime = System.DateTime.FromBinary(startTimeBinary);
             
-            // Получаем длительность экспедиции
+            // Get expedition duration
             int expeditionDuration = PlayerPrefs.GetInt("ExpeditionDuration", 0);
             
-            // Вычисляем сколько времени прошло с начала экспедиции
+            // Calculate how much time has passed since expedition start
             System.TimeSpan timeElapsed = System.DateTime.Now - startTime;
             double elapsedSeconds = timeElapsed.TotalSeconds;
             
-            // Находим нужную экспедицию
+            // Find the required expedition
             ExpeditionData savedExpedition = expeditions.Find(exp => exp.name == savedExpeditionName);
             if (savedExpedition != null)
             {
-                Debug.Log($"Загружена экспедиция: {savedExpeditionName}. Прошло времени: {elapsedSeconds:F1} сек из {expeditionDuration}");
-                
                 if (elapsedSeconds >= expeditionDuration)
                 {
-                    // Экспедиция уже завершена - НЕ запускаем таймер заново!
+                    // Expedition already completed - DON'T start timer again!
                     savedExpedition.isActive = true;
                     currentActiveExpedition = savedExpedition;
                     
-                    // Устанавливаем время так, чтобы экспедиция была завершена
-                    savedExpedition.startTime = Time.time - expeditionDuration - 1; // -1 чтобы точно было завершено
+                    // Set time so expedition is completed
+                    savedExpedition.startTime = Time.time - expeditionDuration - 1; // -1 to ensure completion
                     
-                    // Активируем объект локации если нужно
+                    // Activate location object if needed
                     if (savedExpedition.expeditionLocationObject != null)
                     {
                         savedExpedition.expeditionLocationObject.SetActive(true);
                     }
-                    
-                    Debug.Log("Экспедиция завершена пока игрок был оффлайн!");
                 }
                 else
                 {
-                    // Экспедиция все еще идет - восстанавливаем правильное время
+                    // Expedition still ongoing - restore correct time
                     savedExpedition.isActive = true;
                     currentActiveExpedition = savedExpedition;
                     
-                    // Правильно вычисляем startTime для оставшегося времени
+                    // Correctly calculate startTime for remaining time
                     savedExpedition.startTime = Time.time - (float)elapsedSeconds;
                     
-                    // Активируем объект локации
+                    // Activate location object
                     if (savedExpedition.expeditionLocationObject != null)
                     {
                         savedExpedition.expeditionLocationObject.SetActive(true);
                     }
                     
-                    // Запускаем таймер для продолжающейся экспедиции
+                    // Start timer for ongoing expedition
                     StartCoroutine(ExpeditionTimer(savedExpedition));
-                    
-                    float remainingTime = expeditionDuration - (float)elapsedSeconds;
-                    Debug.Log($"Экспедиция продолжается. Осталось: {remainingTime:F1} сек");
                 }
             }
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"Ошибка при загрузке экспедиции: {e.Message}");
-            // Очищаем поврежденные данные
+            // Clear corrupted data
             ClearExpeditionProgress();
         }
     }
@@ -596,7 +565,5 @@ public class ExpeditionManager : MonoBehaviour
         PlayerPrefs.DeleteKey("ExpeditionStartTime");
         PlayerPrefs.DeleteKey("ExpeditionDuration");
         PlayerPrefs.Save();
-        
-        Debug.Log("Прогресс экспедиции очищен");
     }
 }

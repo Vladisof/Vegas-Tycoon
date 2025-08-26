@@ -25,7 +25,7 @@ public void UpdateMoney1(Product product)
     
     public void OnPurchaseComplete(Product product)
     {
-        Debug.Log("Покупка прошла успешно");
+        Debug.Log("Purchase completed successfully");
         if (product.definition.id == donat)
         {
            _wallet.AddMoney(20000);

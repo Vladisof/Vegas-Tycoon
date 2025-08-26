@@ -32,12 +32,12 @@ public class MoneyController : MonoBehaviour
             money -= amount;
             SaveMoney();
             UpdateMoneyText();
-            Debug.Log("Операция выполнена успешно.");
+            Debug.Log("Operation completed successfully.");
             return true;
         }
         else
         {
-            Debug.LogWarning("Недостаточно монет для выполнения операции.");
+            Debug.LogWarning("Not enough coins to complete the operation.");
             return false;
         }
     }
@@ -56,6 +56,15 @@ public class MoneyController : MonoBehaviour
     {
         PlayerPrefs.SetFloat("Money", money);
         PlayerPrefs.Save();
+    }
+    
+    // Метод для сброса денег к начальному значению
+    public void ResetMoney()
+    {
+        money = 2000; // Initial amount of money
+        SaveMoney();
+        UpdateMoneyText();
+        Debug.Log("Money reset to initial value: " + money);
     }
 
     private void OnApplicationQuit()
